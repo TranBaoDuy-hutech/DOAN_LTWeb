@@ -1,0 +1,38 @@
+﻿@model TravelWeb.Models.Booking
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Xóa đơn đặt tour";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Xác nhận xóa đơn đặt tour</h2>
+
+<div class="alert alert-danger">
+    Bạn có chắc chắn muốn xóa đơn đặt tour của <strong>@Model.CustomerName</strong> không?
+</div>
+
+<table class="table">
+    <tr>
+        <th>Tour</th>
+        <td>@Model.Tour?.Name</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <th>Số người</th>
+        <td>@Model.PeopleCount</td>
+    </tr>
+    <tr>
+        <th>Ngày đặt</th>
+        <td>@Model.BookingDate.ToString("dd/MM/yyyy")</td>
+    </tr>
+</table>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

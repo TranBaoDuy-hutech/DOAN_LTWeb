@@ -1,0 +1,70 @@
+﻿@model IEnumerable<TravelWeb.Models.Guides>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Phân công hướng dẫn viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Phân công hướng dẫn viên cho tour</h5>
+            <p>Ngày khởi hành: @ViewData["StartDate"]</p>
+        </div>
+        <div class="card-body">
+            @if (TempData["GuideAssignmentMessage"] != null)
+            {
+                <div class="alert alert-info">
+                    @TempData["GuideAssignmentMessage"]
+                </div>
+            }
+
+
+            @if (ViewData["CurrentGuideName"] != null)
+            {
+                <div class="alert alert-info">
+                    <strong>HDV hiện tại:</strong> @ViewData["CurrentGuideName"]
+                </div>
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                <form asp-action="AssignGuide" method="post">
+                    <input type="hidden" name="groupBookingId" value="@ViewData["GroupBookingId"]" />
+
+                    <div class="mb-3">
+                        <label for="guideSelect" class="form-label">Chọn hướng dẫn viên:</label>
+                        <select id="guideSelect" name="guideId" class="form-select" required>
+                            <option value="">-- Chọn HDV --</option>
+                            @foreach (var guide in Model)
+                            {
+                                var isSelected = ViewData["CurrentGuideId"] != null && (int)ViewData["CurrentGuideId"] == guide.Id;
+                                if (isSelected)
+                                {
+                                    <option value="@guide.Id" selected="selected">@guide.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@guide.Id">@guide.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="bi bi-check-circle me-1"></i> Lưu phân công
+                        </button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    Không có hướng dẫn viên nào sẵn sàng để phân công cho tour này.
+                </div>
+            }
+        </div>
+    </div>
+</div>

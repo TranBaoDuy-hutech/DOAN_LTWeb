@@ -1,0 +1,4 @@
+Các chức năng đã làm:
+Các chứ năng trong đề.
+Thêm chức năng bảo mật 2 lớp cho Admin và inport dữ liệu từ ex
+Điểm tự chấm 9

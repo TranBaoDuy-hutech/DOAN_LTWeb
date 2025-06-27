@@ -1,0 +1,44 @@
+﻿@model TravelWeb.Models.Tour
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Xóa tour";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-3 text-danger">Xác nhận xóa tour</h2>
+
+<div class="alert alert-warning">
+    Bạn có chắc chắn muốn xóa tour <strong>@Model.Name</strong>?
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Tên tour</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Giá</th>
+        <td>@Model.Price.ToString("N0") VNĐ</td>
+    </tr>
+    <tr>
+        <th>Lịch trình</th>
+        <td>@Model.Itinerary</td>
+    </tr>
+    <tr>
+        <th>Mô tả</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>Hình ảnh</th>
+        <td>
+            <img src="@Model.ImageUrl" alt="Tour Image" style="max-width: 200px;" />
+        </td>
+    </tr>
+</table>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

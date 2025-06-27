@@ -1,0 +1,38 @@
+﻿@model TravelWeb.Models.Booking
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Chi tiết đặt tour";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Chi tiết đơn đặt tour</h2>
+
+<table class="table">
+    <tr>
+        <th>Họ tên khách</th>
+        <td>@Model.CustomerName</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <th>Số người</th>
+        <td>@Model.PeopleCount</td>
+    </tr>
+    <tr>
+        <th>Ngày đặt</th>
+        <td>@Model.BookingDate.ToString("dd/MM/yyyy")</td>
+    </tr>
+    <tr>
+        <th>Tổng tiền</th>
+        <td>@Model.TotalAmount.ToString("N0") VNĐ</td>
+    </tr>
+    <tr>
+        <th>Tên tour</th>
+        <td>@Model.Tour?.Name</td>
+    </tr>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

@@ -1,0 +1,164 @@
+﻿@page
+@model TravelWeb.Areas.Identity.Pages.Account.ConfirmOtpModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Việt Lữ Travel | Xác nhận OTP";
+}
+<head>
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+<div class="login-container">
+    <h1>@ViewData["Title"]</h1>
+    <p>
+        Một mã OTP đã được gửi đến địa chỉ email: <strong>@Model.UserEmail</strong>.
+        Vui lòng kiểm tra hộp thư đến (và thư mục spam) và nhập mã vào ô bên dưới.
+    </p>
+
+    <div asp-validation-summary="All" class="text-danger validation-summary-errors"></div>
+    <form method="post" id="otp-form">
+        @* Ẩn các giá trị cần thiết *@
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="UserEmail" />
+        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+        <div class="form-group">
+            <label asp-for="Input.OtpCode" class="form-label"></label>
+            <input asp-for="Input.OtpCode" class="form-control" autocomplete="one-time-code" />
+            <span asp-validation-for="Input.OtpCode" class="text-danger"></span>
+        </div>
+        <button id="submit-btn" type="submit" class="w-100 btn btn-lg btn-primary">Xác nhận OTP</button>
+        <div class="mt-3 text-center">
+            <p>
+                Không nhận được mã?
+                <a asp-page-handler="ResendOtp"
+                   asp-route-userId="@Model.UserId"
+                   asp-route-email="@Model.UserEmail"
+                   asp-route-returnUrl="@Model.ReturnUrl"
+                   class="btn btn-link">Yêu cầu mã mới</a>
+            </p>
+        </div>
+        <div id="otp-countdown" class="mt-2">
+            Mã OTP sẽ hết hạn trong: <span id="countdown-display">01:00</span>
+        </div>
+        <div id="otp-expired-message" class="text-danger mt-2" style="display:none;">
+            Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let countdownInterval;
+        let totalSeconds = 60; // Thời gian mặc định 1 phút
+
+        function startCountdown() {
+            // Clear any existing interval to prevent multiple timers
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+
+            // Lấy thời điểm tạo OTP từ server
+        @if (Model.OtpCreationUnixTimestamp > 0)
+        {
+            <text>
+                        try {
+                            const creationTime = new Date(@Model.OtpCreationUnixTimestamp * 1000);
+                            const now = new Date();
+                            const elapsedSeconds = Math.floor((now - creationTime) / 1000);
+                            totalSeconds = Math.max(0, 60 - elapsedSeconds);
+
+                            // Debug log
+                            console.log('OTP Creation Time:', creationTime.toISOString());
+                            console.log('Current Time:', now.toISOString());
+                            console.log('Elapsed Seconds:', elapsedSeconds);
+                            console.log('Remaining Seconds:', totalSeconds);
+                        } catch (error) {
+                            console.error('Error calculating countdown:', error);
+                            totalSeconds = 60; // Fallback to default
+                        }
+            </text>
+        }
+        else
+        {
+            <text>
+                        // Nếu không có timestamp từ server, dùng mặc định 60 giây
+                        totalSeconds = 60;
+                        console.log('No valid timestamp from server, using default 60 seconds');
+            </text>
+        }
+
+            // Kiểm tra nếu đã hết hạn
+            if (totalSeconds <= 0) {
+                console.log('OTP already expired on page load');
+                document.getElementById('countdown-display').textContent = 'HẾT HẠN';
+                document.getElementById('submit-btn').disabled = true;
+                document.getElementById('otp-expired-message').style.display = 'block';
+                return;
+            }
+
+            // Cập nhật hiển thị ban đầu
+            updateDisplay();
+
+            // Bắt đầu đếm ngược
+            countdownInterval = setInterval(() => {
+                totalSeconds--;
+                console.log('Countdown tick:', totalSeconds); // Debug mỗi giây
+
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown-display').textContent = 'HẾT HẠN';
+                    document.getElementById('submit-btn').disabled = true;
+                    document.getElementById('otp-expired-message').style.display = 'block';
+                    console.log('Countdown finished');
+                    return;
+                }
+
+                updateDisplay();
+            }, 1000);
+        }
+
+        function updateDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const display = document.getElementById('countdown-display');
+            if (display) {
+                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                console.error('Countdown display element not found');
+            }
+        }
+
+        // Khởi động khi trang load
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM loaded, starting countdown');
+            startCountdown();
+            const otpInput = document.getElementById('Input_OtpCode');
+            if (otpInput) {
+                otpInput.focus();
+            } else {
+                console.error('OTP input element not found');
+            }
+        });
+
+        // Chặn paste text dài hơn 6 ký tự
+        const otpInput = document.getElementById('Input_OtpCode');
+        if (otpInput) {
+            otpInput.addEventListener('paste', function (e) {
+                setTimeout(() => {
+                    if (this.value.length > 6) {
+                        this.value = this.value.substring(0, 6);
+                    }
+                }, 0);
+            });
+
+            // Chỉ cho phép nhập số
+            otpInput.addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value.length > 6) {
+                    this.value = this.value.substring(0, 6);
+                }
+            });
+        } else {
+            console.error('OTP input element not found for event listeners');
+        }
+    </script>
+}

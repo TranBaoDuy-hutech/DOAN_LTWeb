@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Phân bổ doanh thu theo Tour";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div style="display: flex; justify-content: center;">
+    <div style="flex: 0 0 450px; display: flex; flex-direction: column; align-items: center; border: 1px solid #ccc; padding: 15px;">
+        <h4 style="margin-bottom: 10px; text-align:center;">Doanh thu theo Tour</h4>
+        <canvas id="revenuePieChart" width="400" height="400"></canvas>
+        <div id="revenueLegend" style="height: 100px; overflow-y: auto; margin-top: 10px; width: 100%;"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const revenueCtx = document.getElementById('revenuePieChart').getContext('2d');
+
+        const revenuePieChart = new Chart(revenueCtx, {
+            type: 'pie',
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.TourNames)),
+                datasets: [{
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Revenues)),
+                    backgroundColor: [
+                        '#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0',
+                        '#9966ff', '#ff9f40', '#c9cbcf', '#00b894', '#e17055'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.label + ': ' + context.parsed.toLocaleString('vi-VN') + ' VNĐ';
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: [{
+                id: 'custom_legend',
+                afterUpdate(chart) {
+                    const legendContainer = document.getElementById('revenueLegend');
+                    if (!chart.legend) return;
+                    legendContainer.innerHTML = chart.legend.legendItems.map(item =>
+                        `<div style="display:flex;align-items:center;margin-bottom:6px;">
+                            <span style="background-color:${item.fillStyle};width:20px;height:20px;display:inline-block;margin-right:8px;border-radius:3px;"></span>
+                            <span style="font-size:14px;">${item.text}</span>
+                        </div>`
+                    ).join('');
+                }
+            }]
+        });
+    </script>
+}

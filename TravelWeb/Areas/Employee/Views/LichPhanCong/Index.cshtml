@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TravelWeb.Models.ViewModels.BookingGroupViewModel>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Lịch Phân Công Hướng Dẫn Viên";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<h2 class="mb-4">📅 Lịch Phân Công Hướng Dẫn Viên</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Bạn chưa được phân công tour nào.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Ngày khởi hành</th>
+                <th>Tên tour</th>
+                <th>Tên hướng dẫn viên</th>
+                <th>Mã đoàn</th> <!-- hoặc GroupBookingId -->
+                <th>Mã tour</th> <!-- hoặc TourId -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.DepartureDate.ToString("dd/MM/yyyy")</td>
+                    <td>@item.TourName</td>
+                    <td>@item.GuideName</td>
+                    <td>@item.GroupBookingId</td>
+                    <td>@item.TourId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

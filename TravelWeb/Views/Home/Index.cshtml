@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x600/?travel,landscape') center center/cover no-repeat;
+        color: white;
+        padding: 100px 20px;
+        border-radius: 15px;
+    }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+    .btn-custom {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        margin: 5px;
+    }
+</style>
+
+<div class="container">
+    <div class="hero text-center shadow">
+        <h1>Welcome to Việt Lữ Travel!</h1>
+        <p>Explore breathtaking destinations and book unforgettable tours with us today.</p>
+
+        <a class="btn btn-outline-light btn-custom" href="@Url.Action("Index", "Tour")">
+            🧳 View Tours
+        </a>
+
+        <a class="btn btn-primary btn-custom" href="https://learn.microsoft.com/aspnet/core" target="_blank">
+            🔧 Learn ASP.NET Core
+        </a>
+    </div>
+</div>

@@ -1,0 +1,782 @@
+﻿/* ===========================================
+    VIỆT LỮ TRAVEL ADMIN PANEL CSS
+    =========================================== */
+
+:root {
+    --primary-color: #059669; /* Dark Green - from Employee */
+    --secondary-color: #0891b2; /* Teal - from Employee */
+    --accent-color: #f59e0b; /* Amber - from Employee */
+    --success-color: #10b981; /* Emerald Green - from Employee */
+    --danger-color: #ef4444; /* Red */
+    --warning-color: #f59e0b; /* Amber - from Employee */
+    --info-color: #06b6d4; /* Cyan - from Employee */
+    --dark-color: #1f2937; /* Very dark gray */
+    --light-color: #f0fdf4; /* Light Greenish-White - from Employee */
+    --sidebar-bg: #ecfdf5; /* Lighter Greenish-White - from Employee */
+    --main-bg: #ffffff; /* White for main content */
+    --border-color: #d1fae5; /* Light Green border - from Employee */
+    --text-primary: #064e3b; /* Dark Green text - from Employee */
+    --text-secondary: #059669; /* Green text - from Employee */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(5, 150, 105, 0.1), 0 4px 6px -4px rgba(5, 150, 105, 0.1); /* Adjusted for new primary color */
+    --border-radius: 12px;
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --primary-dark: #047857; /* Added from Employee CSS for gradients */
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--light-color) 0%, var(--sidebar-bg) 50%, var(--border-color) 100%); /* Inspired by Employee body background */
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important; /* New primary-secondary gradient */
+    box-shadow: 0 4px 20px rgba(5, 150, 105, 0.3); /* Shadow reflecting new primary color */
+    border-bottom: 3px solid var(--accent-color); /* Accent color border */
+    padding: 1rem 1.5rem; /* Adjusted padding */
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    overflow: hidden; /* For shine animation */
+}
+
+    .navbar::before { /* Shine animation from Employee CSS */
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: shine 3s infinite;
+    }
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.4rem; /* Adjusted font size */
+    color: white !important;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    position: relative; /* For shine z-index */
+    z-index: 2; /* Ensures brand text is above shine */
+}
+
+    .navbar-brand:hover {
+        color: #fef3c7 !important; /* Light accent color on hover */
+        transform: scale(1.05); /* Slightly less scale than previous admin, consistent with employee */
+        text-shadow: 0 2px 10px rgba(245, 158, 11, 0.5); /* Accent color text shadow */
+    }
+
+    .navbar-brand img {
+        height: 40px; /* Adjusted logo size */
+        width: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid var(--accent-color); /* Accent color border */
+        transition: var(--transition);
+        margin-right: 12px;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); /* Accent color shadow */
+    }
+
+    .navbar-brand:hover img {
+        transform: rotate(360deg) scale(1.1);
+        border-color: #fef3c7; /* Lighter border color on hover */
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); /* Stronger accent shadow */
+    }
+
+/* Admin Title (Specific class for admin panel title if applicable) */
+.navbar .navbar-brand.fw-bold {
+    /* Keep this if it's a specific title in the navbar, otherwise remove or adapt */
+    background: linear-gradient(45deg, var(--accent-color) 0%, #facc15 100%); /* Uses accent color */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.8rem; /* Adjusted font size */
+    letter-spacing: 1px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2)); /* Lighter shadow */
+}
+
+/* User Info Area */
+.navbar .text-white {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.75rem 1.25rem; /* Adjusted padding */
+    border-radius: 25px; /* More rounded */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+    .navbar .text-white:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+    }
+
+/* Logout Button */
+.btn-outline-light {
+    border: 2px solid var(--accent-color); /* Accent color border */
+    color: var(--accent-color); /* Accent color text */
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    transition: var(--transition);
+    background: rgba(245, 158, 11, 0.1); /* Subtle accent background */
+}
+
+    .btn-outline-light:hover {
+        background: var(--accent-color); /* Accent color background on hover */
+        color: var(--dark-color); /* Dark text on hover */
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); /* Stronger accent shadow */
+        border-color: var(--accent-color);
+    }
+
+/* Layout for main content and sidebar */
+.admin-main-layout {
+    display: flex;
+    flex-grow: 1;
+    padding: 1.5rem; /* Overall padding for the main layout area */
+}
+
+.row {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+}
+
+.col, [class*="col-"] {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* Sidebar Styles */
+.sidebar-background { /* Renamed from .bg-light for clarity in admin panel context */
+    background: linear-gradient(180deg, var(--sidebar-bg) 0%, #f0fdf4 100%) !important; /* Employee sidebar gradient */
+    border-right: 3px solid var(--border-color) !important; /* Employee border style */
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow-x: hidden;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+
+    .sidebar-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px; /* Thicker top accent bar */
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color)); /* Multi-color accent */
+        border-radius: 0 0 var(--border-radius) var(--border-radius); /* From Employee CSS */
+    }
+
+    /* Removed specific emoji ::after, keeping a place for subtle decoration */
+    .sidebar-background::after {
+        content: ''; /* Removed emoji content, could be a subtle pattern or nothing */
+        position: absolute;
+        bottom: 1rem; /* Adjusted position */
+        left: 1rem;
+        width: 30px; /* Example size */
+        height: 30px; /* Example size */
+        background: rgba(var(--primary-color), 0.1); /* Subtle circle or shape */
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: float 3s ease-in-out infinite;
+    }
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Sidebar Header */
+.sidebar-background h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1.25rem 0.75rem 1rem; /* Adjusted padding */
+    margin-bottom: 1.5rem; /* Adjusted spacing */
+    border-bottom: 2px solid var(--border-color);
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(8, 145, 178, 0.1)); /* Employee gradient */
+    border-radius: var(--border-radius);
+    position: relative;
+    box-shadow: var(--shadow-sm); /* Added subtle shadow */
+}
+
+    .sidebar-background h6::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); /* Employee style */
+        border-radius: 0 4px 4px 0;
+    }
+
+
+/* Navigation Links - Employee Style */
+.nav-link {
+    color: var(--text-primary) !important;
+    padding: 1rem 1.25rem;
+    margin: 0.5rem 0;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    border: 2px solid transparent; /* From Employee CSS */
+}
+
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(5, 150, 105, 0.1), transparent); /* Employee background */
+        transition: var(--transition);
+        z-index: -1;
+    }
+
+    .nav-link:hover::before {
+        left: 100%; /* From Employee CSS */
+    }
+
+    .nav-link:hover {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* Employee hover gradient */
+        color: white !important;
+        transform: translateX(8px) scale(1.02); /* Adjusted transform */
+        box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3); /* Employee hover shadow */
+        border-color: var(--accent-color); /* Accent border on hover */
+    }
+
+    .nav-link i {
+        min-width: 24px; /* Adjusted icon width */
+        text-align: center;
+        margin-right: 0.75rem;
+        transition: var(--transition);
+        font-size: 1.1rem; /* Adjusted icon size */
+    }
+
+    .nav-link:hover i {
+        transform: scale(1.3) rotate(5deg);
+        color: var(--accent-color); /* Accent color for icon on hover */
+        text-shadow: 0 2px 8px rgba(245, 158, 11, 0.5); /* Accent text shadow */
+    }
+
+    /* Active Link State - From Employee CSS */
+    .nav-link.active {
+        background: linear-gradient(135deg, rgba(5, 150, 105, 0.2), rgba(8, 145, 178, 0.2));
+        color: var(--primary-color) !important;
+        border-left: 4px solid var(--primary-color);
+        font-weight: 700;
+        box-shadow: var(--shadow-sm); /* Added subtle shadow for active state */
+    }
+
+/* Main Content Area */
+.main-background { /* Renamed from .col-md-10 for clarity and flexibility */
+    background: linear-gradient(135deg, var(--main-bg) 0%, #f8fafc 100%);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    /* Removed margin: 1rem 0; from previous admin CSS. Rely on admin-main-layout padding */
+}
+
+    .main-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px; /* Adjusted height */
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); /* New gradient */
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+/* Cards and Content */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); /* Retain light background */
+}
+
+    .card:hover {
+        transform: translateY(-8px); /* Adjusted transform */
+        box-shadow: 0 20px 40px rgba(5, 150, 105, 0.15); /* Shadow reflecting new primary color */
+    }
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* New gradient */
+    color: white;
+    font-weight: 600;
+    border-bottom: 3px solid var(--accent-color); /* Accent color border */
+    padding: 1.25rem;
+    font-size: 1.1rem;
+}
+
+/* Buttons - Employee Theme */
+.btn { /* General button styling */
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px; /* Added from previous admin CSS */
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* New gradient */
+    border: none;
+}
+
+    .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: var(--transition);
+    }
+
+    .btn-primary:hover::before {
+        left: 100%;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4); /* Shadow reflecting new primary color */
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color)); /* Darker primary gradient on hover */
+    }
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color), #059669); /* New gradient */
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--info-color), #0891b2); /* New gradient */
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning-color), #d97706); /* New gradient */
+    border: none;
+    color: white;
+    border-radius: var(--border-radius);
+}
+
+.btn-danger { /* Ensured danger button is present and themed */
+    background: linear-gradient(135deg, var(--danger-color), #dc2626);
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+    .btn-danger:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+    }
+
+
+/* Tables */
+.table {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    background: white;
+    margin-bottom: 0;
+}
+
+    .table thead th {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* New gradient */
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 1.25rem; /* Adjusted padding */
+        font-size: 0.95rem; /* Adjusted font size */
+        letter-spacing: 0.5px;
+        vertical-align: middle;
+    }
+
+    .table tbody tr {
+        transition: var(--transition);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+        .table tbody tr:hover {
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.05), rgba(8, 145, 178, 0.05)); /* Hover background reflecting new theme */
+            transform: scale(1.01);
+        }
+
+    .table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+/* Footer - Employee Theme */
+footer {
+    background: linear-gradient(135deg, var(--dark-color), #111827) !important;
+    border-top: 3px solid var(--primary-color) !important; /* Primary color border */
+    position: relative;
+    margin-top: 2rem; /* Adjusted margin */
+    padding: 1.5rem 0; /* Adjusted padding */
+}
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color)); /* New gradient */
+    }
+
+    footer .text-info {
+        color: var(--primary-color) !important; /* Primary color for text */
+    }
+
+    footer strong {
+        color: var(--accent-color); /* Accent color for strong text */
+    }
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.sidebar-background {
+    animation: fadeInLeft 0.6s ease-out forwards;
+}
+
+.main-background {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Responsive Design */
+.navbar-toggler {
+    display: none;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 1.75rem;
+    padding: 0.5rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+    .navbar-toggler:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.2);
+    }
+
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+    .nav-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+@media (max-width: 768px) {
+    .sidebar-background {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        height: 100vh;
+        z-index: 1050;
+        transition: left 0.4s ease-in-out;
+        width: 280px;
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+        border-right: none !important;
+    }
+
+        .sidebar-background.show {
+            left: 0;
+        }
+
+    .main-background {
+        margin-left: 0;
+        margin: 0.5rem; /* Re-added margin for consistency with original employee panel */
+        padding: 1rem;
+    }
+
+    .navbar-brand span {
+        display: none;
+    }
+
+    .navbar .navbar-toggler {
+        display: block;
+        margin-left: auto;
+    }
+
+    .navbar .navbar-collapse {
+        background: var(--primary-color);
+        border-radius: var(--border-radius);
+        margin-top: 1rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-md);
+    }
+
+    .admin-main-layout {
+        flex-direction: column;
+        padding: 0.5rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar-background {
+        position: sticky;
+        top: 0;
+        min-height: 100%;
+        padding-top: calc(75px + 1.5rem);
+        flex-shrink: 0;
+        width: 250px; /* Kept fixed width for desktop */
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 10px; /* From Employee CSS */
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-color);
+    border-radius: 5px; /* From Employee CSS */
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); /* New gradient */
+    border-radius: 5px; /* From Employee CSS */
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, var(--primary-dark), var(--primary-color)); /* New darker gradient */
+    }
+
+/* Loading States */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(5, 150, 105, 0.2), transparent); /* New primary-based loading color */
+        animation: loading 1.5s infinite; /* Adjusted animation speed */
+    }
+
+@keyframes loading {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Focus States for Accessibility */
+.nav-link:focus,
+.btn:focus,
+.form-control:focus {
+    outline: 2px solid var(--accent-color); /* Accent color for focus */
+    outline-offset: 2px;
+}
+
+/* Alert Styles */
+.alert {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 1rem 1.25rem;
+    border-left: 4px solid;
+    box-shadow: var(--shadow-sm); /* Added subtle shadow */
+    display: flex; /* Ensure icon and text align */
+    align-items: center;
+}
+
+    .alert i { /* Icon styling for alerts */
+        margin-right: 0.75rem;
+        font-size: 1.25rem;
+    }
+
+.alert-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+    color: var(--primary-color);
+    border-left-color: var(--success-color);
+}
+
+.alert-info {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.1));
+    color: var(--secondary-color);
+    border-left-color: var(--info-color);
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+    color: #b45309;
+    border-left-color: var(--warning-color);
+}
+/* Danger alert, ensured presence */
+.alert-danger {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+    color: var(--danger-color);
+    border-left-color: var(--danger-color);
+}
+
+
+/* Form Controls */
+.form-control {
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem; /* Adjusted padding */
+    transition: var(--transition);
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    color: var(--text-primary);
+}
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(5, 150, 105, 0.25); /* Focus glow with primary color */
+        background: white;
+    }
+
+/* Badge Styles */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px; /* From Employee CSS */
+    font-weight: 600;
+}
+
+.badge-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* New gradient */
+}
+
+.badge-success {
+    background: linear-gradient(135deg, var(--success-color), #059669); /* New gradient */
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, var(--warning-color), #d97706); /* New gradient */
+}
+/* Ensured other badge colors are consistent */
+.badge-danger {
+    background: linear-gradient(135deg, var(--danger-color), #dc2626);
+}
+
+.badge-info {
+    background: linear-gradient(135deg, var(--info-color), #0891b2);
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .sidebar-background, /* Adjusted from .bg-light */
+    footer {
+        display: none !important;
+    }
+
+    .main-background { /* Adjusted from .col-md-10 */
+        margin: 0 !important;
+        box-shadow: none !important;
+        width: 100% !important;
+    }
+
+    body {
+        background: white !important;
+    }
+}

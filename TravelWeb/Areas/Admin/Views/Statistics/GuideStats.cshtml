@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Thống kê phân công HDV";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var guideNames = ViewBag.GuideNames as List<string>;
+    var assignedCounts = ViewBag.AssignedCounts as List<int>;
+}
+
+<h2>📊 Thống kê phân công Hướng Dẫn Viên</h2>
+
+<canvas id="guideChart" width="600" height="400"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('guideChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(guideNames)),
+                datasets: [{
+                    label: 'Số tour đã được phân công',
+                    data: @Html.Raw(Json.Serialize(assignedCounts)),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Số tour'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tên HDV'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

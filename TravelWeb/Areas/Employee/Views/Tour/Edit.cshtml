@@ -1,0 +1,124 @@
+﻿@model TravelWeb.Models.Tour
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Tour";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<h2 class="mb-4 text-primary">✏️ @ViewData["Title"]</h2>
+
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="needs-validation" novalidate>
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Tên Tour</label>
+        <input asp-for="Name" class="form-control" placeholder="Nhập tên tour" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Giá (VNĐ)</label>
+        <input asp-for="Price" class="form-control" type="number" min="0" placeholder="Nhập giá tour" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DurationDays" class="form-label">Thời gian (ngày)</label>
+        <input asp-for="DurationDays" class="form-control" type="number" min="1" placeholder="Số ngày đi tour" />
+        <span asp-validation-for="DurationDays" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StartDate" class="form-label">Ngày khởi hành</label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Location" class="form-label">Địa điểm đến</label>
+        <input asp-for="Location" class="form-control" placeholder="Nơi đến" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DepartureLocation" class="form-label">Nơi khởi hành</label>
+        <input asp-for="DepartureLocation" class="form-control" placeholder="Nơi xuất phát" />
+        <span asp-validation-for="DepartureLocation" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label">URL Ảnh</label>
+        <input asp-for="ImageUrl" class="form-control" placeholder="Nhập URL ảnh" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Itinerary" class="form-label">Lịch trình</label>
+        <textarea asp-for="Itinerary" class="form-control" rows="4" placeholder="Nhập lịch trình tour"></textarea>
+        <span asp-validation-for="Itinerary" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Mô tả</label>
+        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Nhập mô tả tour"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="Transportation" class="form-label">Phương tiện</label>
+        <input asp-for="Transportation" class="form-control" placeholder="Phương tiện di chuyển" />
+        <span asp-validation-for="Transportation" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TourType" class="form-label">Loại tour</label>
+        <input asp-for="TourType" class="form-control" placeholder="Loại tour" />
+        <span asp-validation-for="TourType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="HotelName" class="form-label">Khách sạn</label>
+        <input asp-for="HotelName" class="form-control" placeholder="Tên khách sạn" />
+        <span asp-validation-for="HotelName" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsHot" class="form-check-input" />
+        <label asp-for="IsHot" class="form-check-label">Nổi bật (Hot)</label>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label">Đánh giá (⭐)</label>
+        <input asp-for="Rating" class="form-control" type="number" step="0.1" min="0" max="5" placeholder="0.0 - 5.0" />
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ReviewCount" class="form-label">Lượt đánh giá</label>
+        <input asp-for="ReviewCount" class="form-control" type="number" min="0" placeholder="Số lượt đánh giá" />
+        <span asp-validation-for="ReviewCount" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary me-2">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

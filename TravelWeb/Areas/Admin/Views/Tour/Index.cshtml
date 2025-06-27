@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TravelWeb.Models.Tour>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Quản lý tour";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="~/css/adminindex.css" />
+
+<h2 class="mb-4 text-primary">📋 Quản lý Tour</h2>
+
+<a class="btn btn-success mb-3" asp-area="Admin" asp-controller="Tour" asp-action="Create">
+    <i class="bi bi-plus-circle"></i> Thêm tour mới
+</a>
+
+<div class="table-responsive shadow rounded">
+    <table class="table table-bordered table-striped table-hover align-middle">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Tên tour</th>
+                <th>Giá</th>
+                <th>Thời gian</th>
+                <th>Khởi hành</th>
+                <th>Địa điểm đến</th>
+                <th>Nơi khởi hành</th>
+                <th>Phương tiện</th>
+                <th>Loại tour</th>
+                <th>Khách sạn</th>
+                <th>Nổi bật</th>
+                <th>Đánh giá</th>
+                <th>Lượt đánh giá</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tour in Model)
+            {
+                <tr>
+                    <td class="fw-semibold">@tour.Name</td>
+                    <td class="text-end text-success">@tour.Price.ToString("N0") đ</td>
+                    <td class="text-center">@tour.DurationDays ngày</td>
+                    <td class="text-center">@tour.StartDate.ToString("dd/MM/yyyy")</td>
+                    <td>@tour.Location</td>
+                    <td>@tour.DepartureLocation</td>
+                    <td>@tour.Transportation</td>
+                    <td>@tour.TourType</td>
+                    <td>@tour.HotelName</td>
+                    <td class="text-center">
+                        @if (tour.IsHot)
+                        {
+                            <span class="badge bg-danger">Hot</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Thường</span>
+                        }
+                    </td>
+                    <td class="text-center">@tour.Rating.ToString("0.0")</td>
+                    <td class="text-center">@tour.ReviewCount</td>
+                    <td class="text-center">
+                        <a asp-area="Admin" asp-controller="Tour" asp-action="Edit" asp-route-id="@tour.Id"
+                           class="btn btn-sm btn-warning me-2" title="Sửa">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a asp-area="Admin" asp-controller="Tour" asp-action="Delete" asp-route-id="@tour.Id"
+                           onclick="return confirm('Bạn chắc chắn muốn xóa tour này?');"
+                           class="btn btn-sm btn-danger" title="Xóa">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,63 @@
+﻿@model TravelWeb.Models.Tour
+
+<div class="tour-details">
+    <h2>@Model.Name</h2>
+    <link rel="stylesheet" href="~/css/tour-details.css" />
+
+    <!-- Hình ảnh tour -->
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="@Model.ImageUrl" alt="@Model.Name" width="500" class="img-fluid" />
+    }
+    else
+    {
+        <img src="/images/default-tour.jpg" alt="Default Tour Image" width="500" class="img-fluid" />
+    }
+
+    <!-- Mô tả ngắn -->
+    <p class="lead">@Model.Description</p>
+
+    <!-- Thông tin chi tiết -->
+    <div class="tour-info">
+        <p><b>💵 Giá:</b> @Model.Price.ToString("N0") đ</p>
+        <p><b>⏱️ Thời gian:</b> @Model.DurationDays ngày</p>
+        <p><b>📅 Khởi hành:</b> @Model.StartDate.ToString("dd/MM/yyyy")</p>
+        <p><b>📍 Địa điểm đến:</b> @Model.Location</p>
+        <p><b>🚏 Nơi khởi hành:</b> @Model.DepartureLocation</p>
+        <p><b>🚌 Phương tiện:</b> @Model.Transportation</p>
+        <p><b>🗺️ Loại tour:</b> @Model.TourType</p>
+        <p><b>🏨 Khách sạn:</b> @Model.HotelName</p>
+        @if (Model.ReviewCount > 0)
+        {
+            <p><b>⭐ Đánh giá:</b> @Model.Rating.ToString("F1") / 5 (@Model.ReviewCount lượt đánh giá)</p>
+        }
+        else
+        {
+            <p><b>⭐ Đánh giá:</b> Chưa có đánh giá</p>
+        }
+        <p><b>🔥 Trạng thái:</b> @(Model.IsHot ? "Tour nổi bật" : "Tour thường")</p>
+    </div>
+
+
+    <!-- Lịch trình chi tiết -->
+    @{
+        var formattedItinerary = System.Text.RegularExpressions.Regex.Replace(
+        Model.Itinerary ?? "",
+        @"(^|\r?\n)(Ngày\s*\d+\s*:[^\n\r]*)",
+        match => match.Groups[1].Value == ""
+        ? $"<span class='day-title'>📅 <strong>{match.Groups[2].Value}</strong></span><br />"
+        : $"<br /><br /><span class='day-title'>📅 <strong>{match.Groups[2].Value}</strong></span><br />",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Multiline
+        );
+    }
+
+    <h4 class="mt-4 mb-3 text-primary">📋 Lịch trình chi tiết</h4>
+    <div class="itinerary" style="white-space: pre-line; line-height: 1.9; text-indent: 2em;">
+        @Html.Raw(formattedItinerary)
+    </div>
+
+    <!-- Nút đặt tour -->
+    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id"
+       class="btn btn-warning mt-3 shadow-sm px-4 py-2">
+        🛒 Đặt Tour Ngay!
+    </a>

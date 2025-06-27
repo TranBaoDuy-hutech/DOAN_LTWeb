@@ -1,0 +1,125 @@
+﻿@model IEnumerable<TravelWeb.Models.GroupBooking>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Quản lý Đoàn Tour";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .badge-success {
+        background-color: #28a745 !important;
+        font-weight: bold;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .badge-warning {
+        background-color: #ffc107 !important;
+        font-weight: bold;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .badge-secondary {
+        background-color: #6c757d !important;
+        font-weight: bold;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: scale(1.05);
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: scale(1.05);
+        }
+
+    .thead-dark th {
+        background-color: #343a40 !important;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+</style>
+
+<h2>Quản lý Đoàn Tour</h2>
+
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Tour</th>
+            <th>Ngày khởi hành</th>
+            <th>Khách đã đăng ký</th>
+            <th>Yêu cầu tối thiểu</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+            var currentCount = group.Bookings.Sum(b => b.PeopleCount);
+            <tr>
+                <td>@group.Tour.Name</td>
+                <td>@group.DepartureDate.ToString("dd/MM/yyyy")</td>
+                <td>@currentCount người</td>
+                <td>@group.MinPeople người</td>
+                <td>
+                    @if (group.IsConfirmed)
+                    {
+                        <span class="badge badge-success">Đã xác nhận</span>
+                    }
+                    else if (currentCount >= group.MinPeople)
+                    {
+                        <span class="badge badge-warning">Đủ khách - Chờ xác nhận</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-secondary">Chưa đủ khách</span>
+                    }
+                </td>
+                <td>
+                    @if (!group.IsConfirmed && currentCount >= group.MinPeople)
+                    {
+                        <form asp-area="Admin" asp-controller="GroupBooking" asp-action="Confirm" asp-route-id="@group.Id" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Xác nhận đoàn tour này?')">Xác nhận</button>
+                        </form>
+                    }
+
+                    <form asp-area="Admin" asp-controller="GroupBooking" asp-action="Cancel" asp-route-id="@group.Id" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn huỷ đoàn này không?')">Huỷ</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

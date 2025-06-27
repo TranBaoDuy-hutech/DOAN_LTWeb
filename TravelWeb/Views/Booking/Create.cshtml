@@ -1,0 +1,203 @@
+﻿@model TravelWeb.Models.Booking
+@{
+    var tour = ViewBag.Tour as TravelWeb.Models.Tour;
+}
+<link rel="stylesheet" href="~/css/booking-form.css" />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Đặt Tour: @tour?.Name
+                    </h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle"></i> @TempData["Error"]
+                        </div>
+                    }
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle"></i> @TempData["Success"]
+                        </div>
+                    }
+
+                    @if (tour != null)
+                    {
+                        <div class="tour-info mb-4 p-3 bg-light rounded">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Giá:</strong> <span class="text-primary">@tour.Price.ToString("N0") VNĐ/người</span></p>
+                                    <p><strong>Ngày bắt đầu:</strong> @tour.StartDate.ToString("dd/MM/yyyy")</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Điểm đến:</strong> @(tour.Location ?? "N/A")</p>
+                                    <p><strong>Điểm khởi hành:</strong> @(tour.DepartureLocation ?? "N/A")</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Lưu ý quan trọng:</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>Tour sẽ được xác nhận khi đủ <strong>10 người</strong> đăng ký.</li>
+                            <li>Ngày khởi hành phải sau ngày hiện tại.</li>
+                        </ul>
+                    </div>
+
+                    <form id="bookingForm" asp-action="Create" asp-controller="Booking" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="TourId" value="@tour?.Id" />
+
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CustomerName" class="form-label">
+                                        <i class="fas fa-user"></i> Họ và tên <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="CustomerName" class="form-control" placeholder="Nhập họ tên người đặt" required />
+                                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Email" class="form-label">
+                                        <i class="fas fa-envelope"></i> Email <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="Email" class="form-control" placeholder="example@email.com" type="email" required />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="PeopleCount" class="form-label">
+                                        <i class="fas fa-users"></i> Số lượng vé <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="PeopleCount" class="form-control" type="number" min="1" max="20" value="1" required />
+                                    <span asp-validation-for="PeopleCount" class="text-danger"></span>
+                                    <small class="form-text text-muted">Tối đa 20 vé/booking</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="DepartureDate" class="form-label">
+                                        <i class="fas fa-calendar-alt"></i> Ngày khởi hành <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="DepartureDate" type="date" class="form-control"
+                                           min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")"
+                                           max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")" required />
+                                    <span asp-validation-for="DepartureDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-calculator"></i> Tổng tiền
+                                    </label>
+                                    <input type="text" id="totalAmount" class="form-control bg-light" readonly />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-credit-card"></i> Tiền cọc (40%)
+                                    </label>
+                                    <input type="text" id="depositAmountInput" class="form-control bg-warning" readonly />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                <i class="fas fa-check-circle"></i>
+                                Xác nhận đặt tour
+                            </button>
+
+                            <a href="@Url.Action("Details", "Tour", new { id = tour?.Id })" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i>
+                                Quay lại thông tin tour
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            const pricePerTicket = parseFloat("@(tour?.Price.ToString().Replace(",", "."))") || 0;
+            const depositPercentage = 0.4;
+
+            function updateAmounts() {
+                const count = parseInt($("#PeopleCount").val()) || 0;
+                const total = count * pricePerTicket;
+                const deposit = total * depositPercentage;
+
+                $("#totalAmount").val(total.toLocaleString('vi-VN') + " VNĐ");
+                $("#depositAmount").text(deposit.toLocaleString('vi-VN'));
+                $("#depositAmountInput").val(deposit.toLocaleString('vi-VN') + " VNĐ");
+
+                $("#submitBtn").html(`
+                    <i class="fas fa-credit-card"></i>
+                    Xác nhạn đặt tour (${count} vé | Tổng: ${total.toLocaleString('vi-VN')} VNĐ | Cọc: ${deposit.toLocaleString('vi-VN')} VNĐ)    
+                `);
+            }
+
+            $("#PeopleCount").on("input change", updateAmounts);
+
+            $("#bookingForm").on("submit", function (e) {
+                const peopleCount = parseInt($("#PeopleCount").val());
+                const departureDate = new Date($("#DepartureDate").val());
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                if (peopleCount <= 0) {
+                    e.preventDefault();
+                    alert("Số lượng vé phải lớn hơn 0!");
+                    return false;
+                }
+
+                if (departureDate <= today) {
+                    e.preventDefault();
+                    alert("Ngày khởi hành phải sau ngày hiện tại!");
+                    return false;
+                }
+
+                $("#submitBtn").prop("disabled", true).html(`
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Đang xử lý...
+                `);
+
+                return true;
+            });
+
+            updateAmounts();
+
+            if (!$("#DepartureDate").val()) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                $("#DepartureDate").val(tomorrow.toISOString().split('T')[0]);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,148 @@
+﻿/* Import Google Fonts - Poppins for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Define CSS Variables for consistency with main style.css */
+:root {
+    --primary-color: #2c5aa0;
+    --secondary-color: #ff6b35;
+    --accent-color: #00d4aa;
+    --dark-color: #1a1a2e;
+    --light-color: #f8f9fa;
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 15px 40px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Overall form styling */
+form {
+    max-width: 650px; /* Controls the maximum width of the form */
+    margin: 60px auto; /* Centers the form horizontally with vertical spacing */
+    padding: 35px; /* Inner spacing within the form container */
+    background: var(--light-color); /* Background color, consistent with site's light theme */
+    border-radius: 16px; /* Rounded corners for the form container */
+    box-shadow: var(--shadow-medium); /* Adds a medium shadow for depth */
+    animation: fadeIn 0.6s ease-out; /* Fade-in animation for smooth appearance */
+    font-family: 'Poppins', sans-serif; /* Ensures consistent typography */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border for definition */
+}
+
+/* Heading for the form */
+h2 {
+    text-align: center; /* Centers the text */
+    color: var(--primary-color); /* Uses the primary brand color for the heading */
+    font-weight: 700; /* Bold font weight */
+    margin-bottom: 35px; /* Spacing below the heading */
+    font-size: 2.2rem; /* Larger font size for prominence */
+}
+
+/* Labels for form fields */
+form label {
+    font-weight: 600; /* Semi-bold font weight */
+    color: var(--dark-color); /* Darker text color for good contrast */
+    margin-bottom: 8px; /* Spacing below each label */
+    display: block; /* Ensures labels take up their own line */
+    font-size: 1.05rem; /* Slightly larger font size for labels */
+}
+
+/* Styling for input fields */
+form .form-control {
+    border-radius: 10px; /* More rounded corners for inputs */
+    padding: 14px 16px; /* Padding inside input fields */
+    font-size: 1.05rem; /* Font size for text inside inputs */
+    border: 1px solid #dcdcdc; /* Light gray border */
+    transition: var(--transition); /* Smooth transition for hover/focus effects */
+}
+
+/* Focus state for input fields */
+form .form-control:focus {
+    border-color: var(--primary-color); /* Border color changes to primary on focus */
+    box-shadow: 0 0 0 0.25rem rgba(44, 90, 160, 0.25); /* Glow effect on focus, using primary color */
+    outline: none; /* Removes the default browser outline */
+}
+
+/* Styling for validation error messages */
+form .text-danger {
+    font-size: 0.9rem; /* Smaller font size for error messages */
+    color: var(--secondary-color); /* Uses the secondary brand color for errors */
+    margin-top: 6px; /* Spacing above the error message */
+    display: block; /* Ensures error messages take up their own line */
+}
+
+/* Styling for the readonly total amount input */
+#totalAmount {
+    background-color: #e9ecef; /* Light gray background to indicate readonly */
+    cursor: default; /* Changes cursor to default to show it's not interactive */
+    font-weight: 600; /* Makes the total amount prominent */
+    color: var(--dark-color); /* Dark text color for the amount */
+}
+
+/* Styling for the submit button */
+form button[type="submit"] {
+    background: var(--gradient-primary); /* Uses the primary gradient for the button background */
+    border: none; /* No border */
+    padding: 15px 25px; /* Padding inside the button */
+    border-radius: 12px; /* Rounded corners for the button */
+    color: white; /* White text color */
+    font-weight: 600; /* Semi-bold font weight */
+    font-size: 1.15rem; /* Larger font size for the button text */
+    width: 100%; /* Makes the button full width */
+    margin-top: 30px; /* Spacing above the button */
+    transition: var(--transition); /* Smooth transition for hover effects */
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3); /* Shadow for depth, aligned with primary gradient */
+}
+
+/* Hover effect for the submit button */
+form button[type="submit"]:hover {
+    opacity: 0.9; /* Slight transparency change on hover */
+    transform: translateY(-3px); /* Lifts the button slightly on hover */
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); /* Stronger shadow on hover */
+}
+
+/* Keyframe animation for fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Starts completely transparent */
+        transform: translateY(30px); /* Starts slightly below its final position */
+    }
+    to {
+        opacity: 1; /* Ends fully opaque */
+        transform: translateY(0); /* Ends at its original position */
+    }
+}
+
+/* Responsive adjustments for screens up to 768px wide (tablets) */
+@media (max-width: 768px) {
+    form {
+        padding: 25px; /* Reduced padding for smaller screens */
+        margin: 30px auto; /* Adjusted margins */
+    }
+    h2 {
+        font-size: 1.8rem; /* Smaller heading font size */
+        margin-bottom: 25px;
+    }
+    form label {
+        font-size: 1rem; /* Slightly smaller label font size */
+    }
+    form .form-control {
+        font-size: 1rem; /* Smaller input font size */
+        padding: 12px 14px;
+    }
+    form button[type="submit"] {
+        padding: 12px 18px; /* Reduced button padding */
+        font-size: 1.05rem; /* Smaller button font size */
+        margin-top: 25px;
+    }
+}
+
+/* Responsive adjustments for screens up to 480px wide (small mobiles) */
+@media (max-width: 480px) {
+    form {
+        margin: 20px 15px; /* Even smaller margins for very small screens */
+        padding: 20px; /* Reduced padding */
+    }
+    h2 {
+        font-size: 1.6rem; /* Even smaller heading font size */
+    }
+}

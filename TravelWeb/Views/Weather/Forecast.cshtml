@@ -1,0 +1,75 @@
+﻿@model Dictionary<string, List<TravelWeb.Controllers.WeatherDailySummary>>
+
+@{
+    ViewData["Title"] = "Dự báo thời tiết 5 ngày cho các tỉnh";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/thoitiet.css" asp-append-version="true" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<h2>@ViewData["Title"]</h2>
+
+<div class="search-container mb-4">
+    <input type="text" id="citySearchInput" class="form-control" placeholder="Tìm kiếm tỉnh..." />
+    <button id="searchButton" class="btn btn-primary mt-2">Tìm kiếm</button>
+</div>
+
+@foreach (var city in Model)
+{
+    <div class="city-weather-block mb-4" data-city-name="@city.Key.ToLower()">
+        <h4>@city.Key</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Nhiệt độ TB (°C)</th>
+                    <th>Cảm nhận (°C)</th>
+                    <th>Độ ẩm (%)</th>
+                    <th>Thời tiết</th>
+                    <th>Biểu tượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var day in city.Value)
+                {
+                    <tr>
+                        <td data-label="Ngày">@day.Date.ToString("ddd, dd/MM/yyyy")</td>
+                        <td data-label="Nhiệt độ TB (°C)">@day.TempAverage.ToString("0.0")</td>
+                        <td data-label="Cảm nhận (°C)">@day.FeelsLike.ToString("0.0")</td>
+                        <td data-label="Độ ẩm (%)">@day.Humidity%</td>
+                        <td data-label="Thời tiết">@day.Description</td>
+                        <td data-label="Biểu tượng">
+                            <img src="@($"https://openweathermap.org/img/wn/{day.Icon}@2x.png")" alt="icon" width="40" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#searchButton').on('click', function () {
+            performSearch();
+        });
+
+        $('#citySearchInput').on('keyup', function (e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            var searchTerm = $('#citySearchInput').val().toLowerCase();
+
+            $('.city-weather-block').each(function () {
+                var cityName = $(this).data('city-name');
+                if (cityName.includes(searchTerm) || searchTerm === '') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,727 @@
+﻿/* ===========================================
+    VIỆT LỮ TRAVEL ADMIN PANEL CSS
+    =========================================== */
+
+/* Root Variables */
+:root {
+    --primary-color: #1e40af; /* Darker blue */
+    --secondary-color: #f59e0b; /* Amber */
+    --success-color: #10b981; /* Emerald green */
+    --danger-color: #ef4444; /* Red */
+    --warning-color: #f59e0b; /* Amber (re-used for consistency) */
+    --info-color: #3b82f6; /* Lighter blue */
+    --dark-color: #1f2937; /* Very dark gray */
+    --light-color: #f8fafc; /* Near-white */
+    --sidebar-bg: #f1f5f9; /* Light gray for sidebar */
+    --main-bg: #ffffff; /* White for main content */
+    --border-color: #e2e8f0; /* Light border color */
+    --text-primary: #1e293b; /* Dark text */
+    --text-secondary: #64748b; /* Gray text */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Refined small shadow */
+    --shadow-md: 0 5px 15px -3px rgba(0, 0, 0, 0.15), 0 3px 6px -3px rgba(0, 0, 0, 0.1); /* More pronounced medium shadow */
+    --shadow-lg: 0 15px 30px -5px rgba(0, 0, 0, 0.2), 0 8px 16px -8px rgba(0, 0, 0, 0.15); /* Stronger large shadow */
+    --border-radius: 12px; /* Slightly more rounded corners for elements */
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother and slower transition */
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prefer Poppins, fallback to system fonts */
+    background-color: var(--light-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex; /* Makes body a flex container */
+    flex-direction: column; /* Stacks children vertically */
+}
+
+/* Navbar Styles */
+.navbar {
+    background: linear-gradient(145deg, var(--primary-color) 0%, #17327e 100%) !important; /* Deeper, more vibrant primary gradient */
+    box-shadow: var(--shadow-md);
+    border-bottom: 4px solid var(--secondary-color); /* Thicker, more prominent border */
+    padding: 0.85rem 2rem; /* Slightly more padding */
+    position: sticky; /* Keep navbar sticky */
+    top: 0;
+    z-index: 1020; /* Ensure it stays on top of content */
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.6rem; /* Slightly larger font */
+    color: white !important;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+    .navbar-brand:hover {
+        color: var(--secondary-color) !important;
+        transform: scale(1.08) translateY(-2px); /* More pronounced scale and lift */
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Subtle text shadow on hover */
+    }
+
+    .navbar-brand img {
+        height: 45px; /* Adjust logo size */
+        width: 45px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid var(--secondary-color); /* Thicker border for logo */
+        transition: var(--transition);
+        margin-right: 12px;
+    }
+
+    .navbar-brand:hover img {
+        transform: rotate(360deg) scale(1.1); /* Rotate and slightly scale logo */
+        border-color: white; /* Border color change on hover */
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); /* Glow effect on logo */
+    }
+
+/* Admin Title */
+.navbar .navbar-brand.fw-bold {
+    background: linear-gradient(45deg, var(--secondary-color) 0%, #facc15 100%); /* Brighter secondary gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2rem; /* More prominent title */
+    letter-spacing: 1.5px; /* Increased letter spacing */
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3)); /* Text shadow for better readability */
+}
+
+/* User Info */
+.navbar .text-white {
+    background: rgba(255, 255, 255, 0.15); /* Slightly less transparent */
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(15px); /* More blur effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Slightly more prominent border */
+    box-shadow: var(--shadow-sm); /* Subtle shadow for user info box */
+    transition: var(--transition);
+}
+
+    .navbar .text-white:hover {
+        background: rgba(255, 255, 255, 0.25); /* More visible on hover */
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+/* Logout Button */
+.btn-outline-light {
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    font-weight: 600;
+    padding: 0.6rem 1.6rem; /* Adjusted padding */
+    border-radius: 30px; /* More rounded pill shape */
+    transition: var(--transition);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+    .btn-outline-light:hover {
+        background-color: var(--secondary-color);
+        color: var(--dark-color); /* Darker text on hover */
+        transform: translateY(-3px) scale(1.02); /* More lift and slight scale */
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.5); /* Stronger, colored shadow */
+    }
+
+/* Layout for main content and sidebar */
+/* Assumes an HTML structure where sidebar and main content are siblings within a flex container, e.g.:
+   <div class="admin-main-layout d-flex flex-grow-1">
+     <div class="sidebar-background">...</div>
+     <div class="main-background">...</div>
+   </div>
+*/
+.admin-main-layout { /* This class would be on the wrapper containing sidebar and main content */
+    display: flex; /* Arranges sidebar and main content in a row */
+    flex-grow: 1; /* Allows this container to fill remaining vertical space */
+    padding: 1.5rem; /* Overall padding for the main layout area */
+}
+/* Adjustments for Bootstrap row/col negative margins */
+.row {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+}
+
+.col, [class*="col-"] {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* Sidebar Styles */
+.sidebar-background {
+    background: linear-gradient(180deg, var(--sidebar-bg) 0%, #dbe7f3 100%); /* Richer, softer gradient */
+    border-right: 2px solid var(--border-color) !important; /* Lighter border */
+    box-shadow: var(--shadow-lg); /* Stronger shadow */
+    position: relative;
+    overflow-x: hidden; /* Prevent horizontal scroll within sidebar */
+    padding: 1.5rem;
+    border-radius: var(--border-radius); /* Rounded corners for sidebar */
+    margin-right: 1.5rem; /* Space between sidebar and main content */
+    display: flex;
+    flex-direction: column; /* Stack sidebar content vertically */
+    flex-shrink: 0; /* Prevent sidebar from shrinking when main content is wide */
+    overflow-y: auto; /* Allow internal vertical scrolling if content overflows */
+}
+
+    .sidebar-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px; /* Thicker top accent bar */
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--success-color), var(--info-color)); /* Multi-color accent */
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    .sidebar-background h6 {
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: 1.2rem; /* Larger heading */
+        padding: 1rem 1rem; /* More padding */
+        margin-bottom: 1.5rem; /* More spacing */
+        border-bottom: 1px solid var(--border-color); /* Lighter border */
+        background: rgba(30, 64, 175, 0.08); /* Slightly darker background */
+        border-radius: var(--border-radius);
+        text-align: center;
+        box-shadow: var(--shadow-sm); /* Subtle shadow for heading */
+    }
+
+/* Navigation Links */
+.nav-link {
+    color: var(--text-primary) !important;
+    padding: 0.85rem 1.2rem; /* More padding */
+    margin: 0.4rem 0; /* More vertical spacing */
+    border-radius: 10px; /* Rounded corners */
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* Ensure text is above pseudo-element */
+    display: flex;
+    align-items: center;
+}
+
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(30, 64, 175, 0.15), transparent); /* Stronger gradient for wipe effect */
+        transition: var(--transition);
+        z-index: -1;
+    }
+
+    .nav-link:hover::before {
+        left: 0; /* Changed to sweep from left to right, covering the whole element */
+        background: linear-gradient(90deg, transparent, rgba(30, 64, 175, 0.25), transparent); /* Darker on hover */
+    }
+
+    .nav-link:hover {
+        background: linear-gradient(135deg, var(--primary-color), var(--info-color)); /* Primary to info gradient */
+        color: white !important;
+        transform: translateX(15px) scale(1.02); /* More pronounced movement and slight scale */
+        box-shadow: var(--shadow-md); /* Stronger shadow on hover */
+        border-left: 5px solid var(--secondary-color); /* Strong accent border */
+    }
+
+    .nav-link i {
+        min-width: 25px; /* Give icons a fixed width */
+        text-align: center;
+        margin-right: 1rem;
+        transition: var(--transition);
+        font-size: 1.1em; /* Slightly larger icons */
+    }
+
+    .nav-link:hover i {
+        transform: scale(1.3) rotate(5deg); /* More dynamic icon movement */
+        color: var(--secondary-color); /* Icon color change on hover */
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background: var(--main-bg); /* Use main-bg for consistency */
+    border: none;
+    box-shadow: var(--shadow-lg); /* Stronger shadow */
+    border-radius: var(--border-radius);
+    padding: 0.6rem 0; /* Adjusted padding */
+    margin-top: 0.75rem; /* More spacing */
+    overflow: hidden; /* Ensure rounded corners clip content */
+}
+
+.dropdown-item {
+    padding: 0.8rem 1.6rem; /* More padding */
+    color: var(--text-primary);
+    transition: var(--transition);
+    border-left: 4px solid transparent; /* Thicker border */
+    font-weight: 500;
+}
+
+    .dropdown-item:hover {
+        background: linear-gradient(90deg, var(--primary-color) 0%, rgba(59, 130, 246, 0.2) 100%); /* Gradient background on hover */
+        color: white;
+        border-left-color: var(--secondary-color); /* Secondary color for accent */
+        transform: translateX(8px); /* More movement */
+        box-shadow: var(--shadow-sm);
+    }
+
+/* Main Content Area */
+.main-background {
+    background: linear-gradient(135deg, var(--main-bg) 0%, #f8fafc 100%);
+    /* Removed min-height: calc(100vh - 120px - 2rem); to allow flexbox to manage height */
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md); /* Clearer shadow */
+    position: relative;
+    padding: 2rem; /* More padding inside main content */
+    margin-bottom: 2rem; /* Space before footer */
+    flex-grow: 1; /* Allows main content to take remaining horizontal space */
+    overflow-y: auto; /* Allow scrolling within the main content if it overflows */
+}
+
+    .main-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px; /* Thicker top accent bar */
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+/* Cards and Content */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md); /* Consistent medium shadow */
+    transition: var(--transition);
+    overflow: hidden;
+    background-color: var(--main-bg);
+}
+
+    .card:hover {
+        transform: translateY(-8px) scale(1.005); /* More pronounced lift and subtle scale */
+        box-shadow: var(--shadow-lg); /* Stronger shadow on hover */
+    }
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--info-color) 100%); /* Dynamic gradient for header */
+    color: white;
+    font-weight: 600;
+    border-bottom: 3px solid var(--secondary-color);
+    padding: 1.25rem 1.5rem; /* More padding */
+    font-size: 1.1rem; /* Slightly larger header font */
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px; /* Consistent button border radius */
+    padding: 0.8rem 1.8rem; /* Consistent button padding */
+    font-weight: 600;
+    transition: var(--transition);
+    text-transform: capitalize; /* Capitalize text for consistency */
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+    border: none;
+}
+
+    .btn-primary:hover {
+        transform: translateY(-3px) scale(1.02); /* More lift and scale */
+        box-shadow: 0 8px 20px rgba(30, 64, 175, 0.4); /* Stronger, colored shadow */
+        background: linear-gradient(135deg, #1e3a8a, var(--primary-color));
+    }
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color), #047857); /* Deeper green gradient */
+    border: none;
+}
+
+    .btn-success:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    }
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--danger-color), #b91c1c); /* Deeper red gradient */
+    border: none;
+}
+
+    .btn-danger:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    }
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning-color), #d97706);
+    border: none;
+    color: white;
+}
+
+    .btn-warning:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+    }
+
+
+/* Tables */
+.table {
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Ensures rounded corners */
+    box-shadow: var(--shadow-md); /* Consistent shadow */
+    background: white;
+    margin-bottom: 0; /* Remove default table margin */
+}
+
+    .table thead th {
+        background: linear-gradient(135deg, var(--primary-color), var(--info-color)); /* Header gradient */
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 1.1rem 1rem; /* More padding */
+        vertical-align: middle;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .table tbody tr {
+        transition: var(--transition);
+        border-bottom: 1px solid var(--border-color); /* Subtle row separator */
+    }
+
+        .table tbody tr:last-child {
+            border-bottom: none; /* No border for the last row */
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(30, 64, 175, 0.08); /* More visible hover background */
+            transform: scale(1.005); /* Subtle scale on hover */
+            box-shadow: var(--shadow-sm); /* Subtle shadow on hover */
+        }
+
+    .table td {
+        padding: 1rem; /* Consistent cell padding */
+        vertical-align: middle;
+    }
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, var(--dark-color) 0%, #0f1621 100%) !important; /* Deeper dark gradient */
+    border-top: 4px solid var(--secondary-color) !important; /* Thicker border */
+    position: relative;
+    padding: 1.5rem 0; /* More padding */
+    margin-top: auto; /* Push footer to the bottom */
+}
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px; /* Thicker accent bar */
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--success-color), var(--info-color));
+    }
+
+    footer .text-info {
+        color: var(--secondary-color) !important; /* Secondary color for copyright accent */
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px); /* More pronounced movement */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px); /* More pronounced movement */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.sidebar-background {
+    animation: fadeInLeft 0.7s ease-out forwards; /* Slightly longer animation */
+}
+
+.main-background {
+    animation: fadeInUp 0.7s ease-out forwards; /* Slightly longer animation */
+}
+
+/* Responsive Design */
+/* Navbar toggler for mobile */
+.navbar-toggler {
+    display: none; /* Hidden by default on large screens */
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 1.75rem;
+    padding: 0.5rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+    .navbar-toggler:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.2);
+    }
+
+/* Mobile Overlay for sidebar */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Darker dim background */
+    z-index: 1040; /* Below sidebar, above main content */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+    .nav-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+@media (max-width: 768px) {
+    .sidebar-background {
+        position: fixed;
+        top: 0;
+        left: -280px; /* Hide sidebar completely off-screen initially */
+        height: 100vh; /* Take full viewport height */
+        z-index: 1050; /* Ensure it's above the overlay and main content */
+        transition: left 0.4s ease-in-out; /* Only transition 'left' for slide effect */
+        width: 280px; /* Wider sidebar for mobile */
+        padding: 1rem;
+        box-shadow: var(--shadow-lg); /* Stronger shadow when open */
+        border-right: none !important; /* Remove border when fixed */
+    }
+
+        .sidebar-background.show {
+            left: 0; /* Slide into view when 'show' class is added */
+        }
+
+    .main-background {
+        margin-left: 0; /* Ensure no margin from sidebar on mobile */
+        padding: 1rem; /* Smaller padding on mobile */
+    }
+
+    /* Hide brand text on mobile, show toggler */
+    .navbar-brand span {
+        display: none;
+    }
+
+    .navbar .navbar-toggler { /* Make sure toggler is visible on mobile */
+        display: block;
+        margin-left: auto; /* Push toggler to the right */
+    }
+
+    .navbar .navbar-collapse {
+        background: var(--primary-color);
+        border-radius: var(--border-radius);
+        margin-top: 1rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-md);
+    }
+    /* Hide the default Bootstrap flex for rows on small screens if it conflicts */
+    .admin-main-layout {
+        flex-direction: column; /* Stack sidebar and main content vertically on mobile */
+        padding: 0.5rem; /* Reduced padding for overall layout on mobile */
+    }
+}
+
+/* Desktop layout adjustments */
+@media (min-width: 769px) {
+    .sidebar-background {
+        position: sticky; /* Keep it sticky on desktop */
+        top: 0; /* Stick to the top of the viewport */
+        min-height: 100%; /* Make sidebar stretch to its parent's height */
+        padding-top: calc(75px + 1.5rem); /* Adjust padding to account for sticky navbar */
+        /* Assuming 75px is approximate navbar height, 1.5rem is additional space */
+        flex-shrink: 0; /* Prevent it from shrinking if main content is too wide */
+        width: 250px; /* Define a fixed width for desktop sidebar */
+    }
+
+    /* Hide mobile toggler on desktop */
+    .navbar-toggler {
+        display: none;
+    }
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* For horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-color), var(--info-color)); /* Gradient scrollbar thumb */
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #1e3a8a, #3b82f6); /* Darker on hover */
+    }
+
+/* Loading Animation */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        animation: loading 1.8s infinite; /* Slightly slower animation */
+    }
+
+@keyframes loading {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Focus States */
+.nav-link:focus,
+.btn:focus,
+.form-control:focus {
+    outline: 3px solid var(--secondary-color); /* Thicker outline for better visibility */
+    outline-offset: 3px; /* More offset */
+    box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.2); /* Subtle glow on focus */
+}
+
+/* Alert Messages */
+.alert {
+    border-radius: var(--border-radius); /* Consistent border radius */
+    padding: 1.25rem; /* More padding */
+    font-weight: 500;
+    border: none;
+    box-shadow: var(--shadow-sm); /* Subtle shadow */
+    display: flex;
+    align-items: center;
+}
+
+    .alert i {
+        margin-right: 0.75rem;
+        font-size: 1.25rem;
+    }
+
+.alert-success {
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    color: white;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, var(--danger-color), #b91c1c);
+    color: white;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, var(--warning-color), #d97706);
+    color: white;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, var(--info-color), #2563eb);
+    color: white;
+}
+
+
+/* Form Controls */
+.form-control {
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.85rem; /* More padding */
+    transition: var(--transition);
+    background-color: var(--main-bg); /* Ensure consistent background */
+    color: var(--text-primary);
+}
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(30, 64, 175, 0.2); /* Softer, wider focus glow */
+    }
+
+/* Badge Styles */
+.badge {
+    font-size: 0.8rem; /* Slightly larger badge font */
+    padding: 0.55rem 0.85rem; /* More padding */
+    border-radius: 25px; /* More rounded */
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.badge-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+}
+
+.badge-success {
+    background: linear-gradient(135deg, var(--success-color), #047857);
+}
+
+.badge-danger {
+    background: linear-gradient(135deg, var(--danger-color), #b91c1c);
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, var(--warning-color), #d97706);
+}
+
+.badge-info {
+    background: linear-gradient(135deg, var(--info-color), #2563eb);
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .sidebar-background,
+    footer {
+        display: none !important;
+    }
+
+    .main-background {
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+}

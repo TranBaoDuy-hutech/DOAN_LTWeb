@@ -1,0 +1,115 @@
+﻿<style >
+h2.text-primary {
+    font-weight: bold;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+a.btn-success {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+    transition: all 0.3s ease;
+}
+
+    a.btn-success:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+.table-responsive {
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+    .table th {
+        background-color: #212529;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+        text-transform: uppercase;
+        border: none;
+    }
+
+    .table td {
+        background-color: #f9f9f9;
+        border: none;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+    .table tbody tr {
+        border-radius: 10px;
+        transition: background-color 0.2s ease;
+    }
+
+.table-hover tbody tr:hover td {
+    background-color: #e6f2ff;
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-warning {
+    background-color: #f0ad4e;
+    border: none;
+}
+
+    .btn-warning:hover {
+        background-color: #ec971f;
+        transform: scale(1.05);
+    }
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+    }
+
+.badge {
+    font-size: 13px;
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+
+.text-success {
+    color: #28a745 !important;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    h2.text-primary {
+        font-size: 22px;
+    }
+
+    .table th, .table td {
+        font-size: 12px;
+    }
+
+    .btn-sm {
+        font-size: 12px;
+    }
+}
+
+</style >

@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    // Kiểm tra nếu user đăng nhập bằng GitHub
+    var isGitHubLogin = User?.Claims.Any(c =>
+        c.Type == "http://schemas.microsoft.com/identity/claims/identityprovider"
+        && c.Value == "GitHub") == true;
+
+    var user = await UserManager.GetUserAsync(User);
+    var userName = user?.UserName ?? "Người dùng";
+}
+
+<ul class="navbar-nav ms-auto">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item d-flex align-items-center">
+            <span class="nav-link">👋 Xin chào, <strong>@userName</strong></span>
+        </li>
+
+        @* Nếu login bằng GitHub, chỉ hiển thị nút "Đăng xuất GitHub" *@
+        @if (isGitHubLogin)
+        {
+            <li class="nav-item">
+                <form asp-controller="Account" asp-action="LogoutGitHub" method="post" class="d-inline ms-2">
+                    <button type="submit" class="btn btn-danger btn-sm">Đăng xuất GitHub</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <form id="logoutForm" class="d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
+                    <button type="submit" class="btn btn-outline-danger btn-sm ms-2">Đăng xuất</button>
+                </form>
+            </li>
+        }
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Đăng ký</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
+        </li>
+        
+    }
+</ul>

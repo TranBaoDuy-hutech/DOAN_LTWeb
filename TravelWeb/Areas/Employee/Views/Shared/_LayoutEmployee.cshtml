@@ -1,0 +1,96 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Việt Lữ Travel Nhân viên</title>
+   
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/employee.css" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
+        <a class="navbar-brand fw-bold text-light d-flex align-items-center" asp-area="" asp-controller="Tour" asp-action="Index">
+            <img src="~/image/logo.png" alt="Logo" style="height: 40px;" class="me-2" />
+            Việt Lữ Travel - Nhân viên
+        </a>
+        <div class="ms-auto">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <span class="text-white me-3"><i class="fas fa-user-circle me-1"></i> @User.Identity.Name</span>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-light btn-sm">Đăng xuất</button>
+                </form>
+            }
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid flex-grow-1">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-2 p-3 bg-light border-end">
+                <h6 class="text-secondary mb-3">📁 Chức năng</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Tour" asp-action="Index">
+                            <i class="fas fa-map-marked-alt me-2"></i>Tour đang mở
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="LichPhanCong" asp-action="Index">
+                            <i class="fas fa-receipt me-2"></i>Lịch dẫn tour
+                        </a>
+                    </li>                   
+                </ul>
+            </aside>
+
+            <!-- Page Content -->
+            <main class="col-md-10 p-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-auto border-top">
+        <div class="container">
+            <div class="row">
+                <!-- Thông tin liên hệ -->
+                <div class="col-md-8">
+                    <p class="mb-1"><strong>Việt Lữ Travel</strong> | Hệ thống quản trị du lịch chuyên nghiệp.</p>
+                    <p class="mb-0">
+                        <i class="fas fa-map-marker-alt me-2 text-info"></i>
+                        Địa chỉ: Khu Công nghệ cao Xa lộ Hà Nội, Hiệp Phú, Thủ Đức, Hồ Chí Minh, Việt Nam
+                    </p>
+                    <p class="mb-0">
+                        <i class="fas fa-phone me-2 text-info"></i>
+                        Điện thoại: 0329810650
+                    </p>
+                    <p class="mb-0">
+                        <i class="fas fa-envelope me-2 text-info"></i>
+                        Email: baoduy10072004@gmail.com
+                    </p>
+                </div>
+
+                <!-- Thông tin bản quyền và người phát triển -->
+                <div class="col-md-4 text-md-end">
+                    <p class="mb-1">Việt Lữ Travel | Nhân viên </p>
+                    <p class="mb-0">&copy; 2025 Việt Lữ Travel - by Trần Bảo Duy</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

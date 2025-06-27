@@ -1,0 +1,98 @@
+﻿/* Styling for the login page */
+
+body {
+    background-color: #e0f2f7; /* Light blue background */
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    background-color: #ffffff; /* White background for the form container */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 80%; /* Adjusted for wider layout */
+    width: 100%; /* Ensure it takes full width up to max-width */
+    margin: 50px auto;
+    border-top: 5px solid #2196f3; /* Blue border top */
+}
+
+    .login-container h1 {
+        color: #1976d2; /* Darker blue for headings */
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+.form-group label {
+    color: #424242; /* Dark gray for labels */
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #90caf9; /* Light blue border for inputs */
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+    .form-control:focus {
+        border-color: #2196f3; /* Blue border on focus */
+        box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25); /* Light blue shadow on focus */
+        outline: none;
+    }
+
+.btn-primary {
+    background-color: #2196f3; /* Blue background for primary button */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+    .btn-primary:hover {
+        background-color: #1976d2; /* Darker blue on hover */
+    }
+
+.forgot-password, .register-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #2196f3; /* Blue for links */
+    text-decoration: none;
+}
+
+    .forgot-password:hover, .register-link:hover {
+        text-decoration: underline;
+    }
+
+.validation-summary-errors ul {
+    list-style-type: none;
+    padding: 0;
+    color: #d32f2f; /* Red for error messages */
+    text-align: left;
+    margin-top: 10px;
+}
+
+.validation-summary-errors li {
+    margin-bottom: 5px;
+}
+
+.checkbox-label {
+    color: #424242;
+}
+
+.external-logins {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+    .external-logins h4 {
+        color: #1976d2;
+        margin-bottom: 15px;
+    }

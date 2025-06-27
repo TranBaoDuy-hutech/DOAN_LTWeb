@@ -1,0 +1,101 @@
+﻿/* Styling for the registration page */
+
+body {
+    background-color: #e0f2f7; /* Light blue background, consistent with login */
+    font-family: Arial, sans-serif;
+}
+
+.register-container {
+    background-color: #ffffff; /* White background for the form container */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 80%; /* Adjusted for wider layout */
+    width: 100%; /* Ensure it takes full width up to max-width */
+    margin: 50px auto;
+    border-top: 5px solid #2196f3; /* Blue border top, consistent */
+}
+
+    .register-container h1 {
+        color: #1976d2; /* Darker blue for headings, consistent */
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+.form-group label {
+    color: #424242; /* Dark gray for labels, consistent */
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #90caf9; /* Light blue border for inputs, consistent */
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+    .form-control:focus {
+        border-color: #2196f3; /* Blue border on focus, consistent */
+        box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25); /* Light blue shadow on focus, consistent */
+        outline: none;
+    }
+
+.btn-primary {
+    background-color: #2196f3; /* Blue background for primary button, consistent */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+    .btn-primary:hover {
+        background-color: #1976d2; /* Darker blue on hover, consistent */
+    }
+
+.validation-summary-errors ul {
+    list-style-type: none;
+    padding: 0;
+    color: #d32f2f; /* Red for error messages, consistent */
+    text-align: left;
+    margin-top: 10px;
+}
+
+.validation-summary-errors li {
+    margin-bottom: 5px;
+}
+
+.external-logins {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+    .external-logins h4 {
+        color: #1976d2; /* Consistent blue */
+        margin-bottom: 15px;
+    }
+
+/* Specific styles for the Register page if needed, e.g., role selection */
+.form-select { /* Assuming a select element for roles */
+    border: 1px solid #90caf9;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: #424242;
+}
+
+    .form-select:focus {
+        border-color: #2196f3;
+        box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+        outline: none;
+    }

@@ -1,0 +1,98 @@
+﻿@model dynamic
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Thống kê doanh thu & lượt đặt tour";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>@ViewData["Title"]</h2>
+
+<div class="mb-3">
+    <a class="btn btn-outline-primary" asp-action="TourDistribution" asp-controller="Statistics" asp-area="Admin">
+        Xem biểu đồ phân bố tour
+    </a>
+</div>
+
+
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card shadow border-left-primary p-3">
+            <h5 class="text-primary">Tổng doanh thu:</h5>
+            <h4>@string.Format("{0:N0} VNĐ", ViewBag.TotalRevenue)</h4>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow border-left-danger p-3">
+            <h5 class="text-danger">Tổng lượt đặt tour:</h5>
+            <h4>@ViewBag.TotalBookings lượt</h4>
+        </div>
+    </div>
+</div>
+
+
+<canvas id="revenueChart" height="100"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.Dates)),
+
+                datasets: [
+                    {
+                        label: 'Doanh thu (VNĐ)',
+                        data: @Html.Raw(Json.Serialize(ViewBag.Revenues)),
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        yAxisID: 'y1'
+                    },
+                    {
+                        label: 'Lượt đặt tour',
+                        data: @Html.Raw(Json.Serialize(ViewBag.Bookings)),
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        yAxisID: 'y2'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                stacked: false,
+                scales: {
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Doanh thu (VNĐ)'
+                        }
+                    },
+                    y2: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Lượt đặt tour'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

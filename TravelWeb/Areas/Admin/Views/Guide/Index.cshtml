@@ -1,0 +1,47 @@
+﻿@model List<TravelWeb.Models.Guides>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Danh sách Hướng dẫn viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm HDV mới</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Tên HDV</th>
+            <th>Điện thoại</th>
+            <th>Email</th>
+            <th>Kỹ năng</th> 
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var guide in Model)
+        {
+            <tr>
+                <td>@guide.Name</td>
+                <td>@guide.Phone</td>
+                <td>@guide.Email</td>
+                <td>
+                    @foreach (var skill in guide.Skills?.Split(',') ?? Array.Empty<string>())
+                    {
+                        <span class="badge bg-info text-dark me-1">@skill.Trim()</span>
+                    }
+                </td>
+                <td>@(guide.IsActive ? "Hoạt động" : "Ngưng hoạt động")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@guide.Id" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@guide.Id" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,125 @@
+﻿@model TravelWeb.Models.Tour
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Thêm Tour mới";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="~/css/adadd.css" />
+<div class="form-container">
+    <h2 class="text-success">Thêm Tour mới</h2>
+    <form asp-action="Create" method="post">
+       
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Name" class="form-label">Tên Tour</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Price" class="form-label">Giá (VNĐ)</label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DurationDays" class="form-label">Số ngày</label>
+                    <input asp-for="DurationDays" class="form-control" />
+                    <span asp-validation-for="DurationDays" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="StartDate" class="form-label">Ngày khởi hành</label>
+                    <input asp-for="StartDate" class="form-control" type="date" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Location" class="form-label">Địa điểm</label>
+                    <input asp-for="Location" class="form-control" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DepartureLocation" class="form-label">Nơi xuất phát</label>
+                    <input asp-for="DepartureLocation" class="form-control" />
+                    <span asp-validation-for="DepartureLocation" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Transportation" class="form-label">Phương tiện</label>
+                    <input asp-for="Transportation" class="form-control" />
+                    <span asp-validation-for="Transportation" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TourType" class="form-label">Loại tour</label>
+                    <input asp-for="TourType" class="form-control" />
+                    <span asp-validation-for="TourType" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="HotelName" class="form-label">Tên khách sạn</label>
+                    <input asp-for="HotelName" class="form-control" />
+                    <span asp-validation-for="HotelName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Đường dẫn ảnh</label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Rating" class="form-label">Đánh giá (1-5)</label>
+                    <input asp-for="Rating" class="form-control" />
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="ReviewCount" class="form-label">Số lượt đánh giá</label>
+                    <input asp-for="ReviewCount" class="form-control" />
+                    <span asp-validation-for="ReviewCount" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3 form-check">
+                    <input asp-for="IsHot" class="form-check-input" />
+                    <label asp-for="IsHot" class="form-check-label">Tour nổi bật</label>
+                    <span asp-validation-for="IsHot" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label asp-for="Description" class="form-label">Mô tả</label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label asp-for="Itinerary" class="form-label">Lịch trình</label>
+                    <textarea asp-for="Itinerary" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Itinerary" class="text-danger"></span>
+                </div>
+            </div>
+      
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        
+
+    </form>
+
+</div>
+
+<form asp-action="ImportFromExcel" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Chọn file Excel (.xlsx)</label>
+        <input type="file" name="excelFile" class="form-control" accept=".xlsx" />
+    </div>
+    <button type="submit" class="btn btn-success">Nhập từ Excel</button>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

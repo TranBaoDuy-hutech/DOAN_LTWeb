@@ -1,0 +1,30 @@
+﻿@model IEnumerable<TravelWeb.Models.GroupBooking>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Lịch làm việc HDV";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml"; 
+}
+
+<h2>Lịch Tour Đã Phân Công</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tên Tour</th>
+            <th>Ngày Khởi Hành</th>
+            <th>Hướng Dẫn Viên</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Tour?.Name</td>
+                <td>@item.DepartureDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.Guide?.Name</td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
